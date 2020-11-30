@@ -1,0 +1,29 @@
+1629. Slowest Key <Easy>
+
+
+class Solution {
+public:
+    char slowestKey(vector<int>& t, string k) 
+    {
+        int mi,ma;
+        mi=0,ma=t[0];
+        for(int i=1;i<t.size();i++)
+        {
+            if(ma<t[i]-t[i-1])
+            {
+                ma=t[i]-t[i-1];
+                //if(k[mi]<k[i-1])
+                mi=i;
+            }
+            if(ma==t[i]-t[i-1])
+            {
+                if(k[mi]<k[i])
+                {
+                    mi=i;
+                }
+            }
+        }
+        return k[mi];
+    }
+};
+
