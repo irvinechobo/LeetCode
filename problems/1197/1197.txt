@@ -1,0 +1,38 @@
+1197. Minimum Knight Moves <Medium>
+
+
+class Solution {
+    int dirRow[8] = {-2, -1, 2, 1, -2, -1,  2,  1};
+    int dirCol[8] = { 1,  2, 1, 2, -1, -2, -1, -2};
+public:
+    int minKnightMoves(int x, int y) {
+        queue< pair< pair<int,int>, int > > Q;
+        Q.push({{0,0}, 0});
+
+        int xx = abs(x), yy = abs(y);
+        set<pair<int,int>> visited;
+        visited.insert({0,0});
+        
+        while(!Q.empty()){
+            int row = Q.front().first.first;
+            int col = Q.front().first.second;
+            int distance = Q.front().second;
+            Q.pop();
+
+            if(row == xx && col == yy)
+                return distance;
+            
+            for(int i = 0; i < 8; i++){
+                int r = row + dirRow[i];
+                int c = col + dirCol[i];
+                
+                if(r >= -2 && r < xx + 2 && c >= -2 && c < yy + 2 && !visited.count({r,c})){
+                    visited.insert({r,c}); 
+                    Q.push({{r,c},distance+1});
+                }
+            }
+        }
+        
+        return -1;
+    }
+};
