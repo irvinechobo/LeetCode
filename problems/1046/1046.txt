@@ -1,0 +1,25 @@
+1046. Last Stone Weight <Easy>
+
+class Solution {
+public:
+    int lastStoneWeight(vector<int>& stones) {
+        priority_queue<int> maxHeap;
+        
+        for(int i = 0; i < stones.size(); i++){
+            maxHeap.push(stones[i]);
+        }
+        
+        while(maxHeap.size() > 1){
+            int low, high;
+            high = maxHeap.top();
+            maxHeap.pop();
+            low  = maxHeap.top();
+            maxHeap.pop();
+            if(high != low)
+                maxHeap.push(high-low);
+        }
+        
+        return maxHeap.size() == 1 ? maxHeap.top() : 0;
+        
+    }
+};
