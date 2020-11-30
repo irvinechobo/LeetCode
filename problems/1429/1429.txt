@@ -1,0 +1,28 @@
+1429. First Unique Number <Medium>
+
+
+class FirstUnique {
+private:
+    unordered_map<int, int> m; //<num, count>
+    queue<int> q; //<unique nums>
+public:
+    FirstUnique(vector<int>& nums) {
+        for(int num: nums)
+        {
+            if(++m[num] == 1)
+                q.push(num);
+        }
+    }
+    
+    int showFirstUnique() {
+        while(!q.empty() && m[q.front()] > 1)
+            q.pop();
+        return q.empty() ? -1 : q.front();
+    }
+    
+    void add(int value) {
+        if(++m[value] == 1)
+            q.push(value);
+    }
+};
+
