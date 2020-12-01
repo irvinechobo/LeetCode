@@ -1,0 +1,41 @@
+1102. Path With Maximum Minimum Value <Medium>
+
+
+class Solution {
+    int dirRow[4] = {-1, 0, 0, 1};
+    int dirCol[4] = {0, 1, -1, 0};
+public:
+    int maximumMinimumPath(vector<vector<int>>& A) {
+        int H = A.size();
+        if(H == 0) return -1;
+        int W = A[0].size();
+        
+        priority_queue<pair<int,pair<int,int>>> PQ;
+        PQ.push({A[0][0],{0,0}});
+        A[0][0] = -1;
+        int maxScore = INT_MAX;
+        
+        while(!PQ.empty()){
+            int row = PQ.top().second.first;
+            int col = PQ.top().second.second;
+            int val = PQ.top().first;
+            PQ.pop();
+            
+            maxScore = min(maxScore, val);
+            if(row == H-1 && col == W-1)
+                break;
+
+            for(int i = 0; i < 4; i++){
+                int x = row + dirRow[i];
+                int y = col + dirCol[i];
+                
+                if(x >= 0 && x < H && y >= 0 && y < W && A[x][y] >= 0){
+                    PQ.push({A[x][y],{x,y}});
+                    A[x][y] = -1;
+                }
+            }
+        }
+
+        return maxScore;
+    }
+};
