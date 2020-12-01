@@ -1,0 +1,24 @@
+362. Design Hit Counter  <Medium>
+
+
+class HitCounter {
+    multiset<int> hitscounter;
+public:
+    /** Initialize your data structure here. */
+    HitCounter() {
+        
+    }
+    
+    void hit(int timestamp) {        
+        hitscounter.insert(timestamp);                
+    }
+
+    /** Return the number of hits in the past 5 minutes.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    int getHits(int timestamp) {        
+        auto pos = hitscounter.upper_bound(timestamp-300);
+        //returns an iterator to the first element greater than the given key
+        hitscounter.erase(hitscounter.begin(), pos);
+        return hitscounter.size();
+    }
+};
