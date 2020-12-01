@@ -1,0 +1,44 @@
+1091. Shortest Path in Binary Matrix
+
+
+class Solution {
+public:
+    int dirRow[8] = {-1, -1, -1, 0, 1, 1, 1, 0};
+    int dirCol[8] = {-1, 0, 1, 1, 1, 0, -1, -1};
+    
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int H = grid.size();
+        int W = grid[0].size();
+        
+        if(grid[0][0] == 1)
+            return -1;
+        
+        queue<pair<pair<int,int>,int>> Q;
+        Q.push({{0,0},0});
+        
+        //set<pair<int,int>> visited;
+        
+        while(!Q.empty()){
+            int r = Q.front().first.first;
+            int c = Q.front().first.second;
+            int distance = Q.front().second;
+            Q.pop();
+            
+            if(r == H-1 && c == W-1)
+                return distance + 1;
+                        
+            for(int i = 0; i < 8; i++){
+                int x = r + dirRow[i];
+                int y = c + dirCol[i];
+                int count = distance;
+                
+                if(x >= 0 && x < H && y >= 0 && y < W && !grid[x][y]){
+                    grid[x][y] = 1;
+                    Q.push({{x,y}, count+1});
+                }
+            }
+        }
+        
+        return -1;
+    }
+};
