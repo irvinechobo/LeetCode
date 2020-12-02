@@ -1,0 +1,37 @@
+403. Frog Jump <hard>
+
+
+class Solution {
+public:
+    bool canCross(vector<int>& stones) {
+        set<pair<int,int>> visited;
+        unordered_set<int> stoneSet(stones.begin(),stones.end());
+        stack<pair<int,int>> S;
+        S.push({0,0});
+        
+        int end = stones[stones.size()-1];
+        while(!S.empty()) {
+            pair<int,int> p = S.top();
+            S.pop();
+            
+            if(visited.count(p))
+                continue;
+            visited.insert(p);
+            
+            int loc = p.first;
+            int steps = p.second;
+            if(loc == end)
+                return true;
+            else if(loc < end) {
+                for(int i = steps-1; i < steps+2; i++){
+                    if(i <= 0)
+                        continue;
+                    if(stoneSet.count(loc+i))
+                        S.push({loc+i, i});        
+                }
+            }
+        }
+        
+        return false;
+    }
+};
