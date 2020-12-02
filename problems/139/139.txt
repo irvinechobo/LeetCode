@@ -1,0 +1,36 @@
+139. Word Break  <Medium>
+
+
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        int n = s.size();
+        unordered_set<string> S(wordDict.begin(),wordDict.end());
+
+        /* BFS */
+        queue<int> Q;
+        Q.push(0);
+        vector<int> visited(n, 0);
+        //visited[0] = 1;
+        
+        while(!Q.empty()){
+            int start = Q.front();
+            Q.pop();
+            
+            if(!visited[start]){
+                for(int end = start; end <= n; end++){
+                    string word = s.substr(start, end-start+1);
+                    if(S.find(word) != S.end()){
+                        if(end == n)
+                            return true;
+                        Q.push(end+1);
+                        cout << word << "," << start << ":" << end << endl;
+                    }                
+                }
+                visited[start] = 1;                
+            }
+        }
+        
+        return false;
+    }
+};
