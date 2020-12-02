@@ -19,12 +19,14 @@ public:
         if(left_idx > right_idx)
             return nullptr;
         
+        // Last Value ==> Root
         int root_val = postorder[post_idx];
         TreeNode* root = new TreeNode(root_val);
         
         int index = inorder_map[root_val];
         post_idx--;
         
+        // left subtree <-- index --> right subtree
         root->right = recursive(postorder, index + 1, right_idx);
         root->left = recursive(postorder, left_idx, index - 1);
 
