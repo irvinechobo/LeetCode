@@ -26,9 +26,10 @@ public:
                 
                 // Determine the next sq val, on snake or ladder
                 // Compute row and col in the board
-                int row = (next_sq - 1) / n; 
+                int m = next_sq - 1;
+                int row = m/n; 
                 // the colum depends on if row is even or odd
-                int col = (row % 2 == 0) ? (next_sq - 1) % n : n - 1 - (next_sq - 1) % n;
+                int col = (row % 2 == 0) ? m%n : n - 1 - m%n;
                 
                 // the next sq can be on the snake (-1) or ladder
                 if(board[n-1-row][col] != -1)
