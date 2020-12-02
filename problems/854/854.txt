@@ -1,0 +1,39 @@
+854. K-Similar Strings <Hard>
+
+
+
+int kSimilarity(string A, string B) {
+    int N = A.size();
+    unordered_set<string> vis;
+    queue<pair<string, int>> q;
+    q.push({A, 0});
+
+    while (!q.empty()) {
+        string C = q.front().first;
+        int count = q.front().second;
+        q.pop();
+
+        if(C == B) 
+            return count;
+
+        if (vis.find(C) != vis.end()) 
+            continue;
+        vis.insert(C);
+        
+        int i = 0;
+        while (C[i] == B[i]) 
+            i++;
+        
+        for (int j = i + 1; j < N; ++j) {
+            string temp = C;
+            if (B[j] == temp[i] && B[j] != temp[j]) {
+                swap(temp[i], temp[j]);
+                q.push({temp, count + 1});
+            }
+        }
+    }
+
+    return -1;
+}
+
+
