@@ -31,8 +31,11 @@ private:
     }
 public:
     TreeNode* balanceBST(TreeNode* root) {
+        // convert vector
         vector<TreeNode*> nodes;
         inorderTraversal(root, nodes);
+        
+        // build BST
         return buildBST(nodes, 0, nodes.size());
     }
 };
