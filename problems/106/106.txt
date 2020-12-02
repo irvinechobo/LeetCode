@@ -1,0 +1,35 @@
+106. Construct Binary Tree from Inorder and Postorder Traversal <medium>
+
+
+class Solution {
+    int post_idx = 0;
+    unordered_map<int,int> inorder_map;
+public:
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        
+        for(int i = 0; i < inorder.size(); i++){
+            inorder_map[inorder[i]] = i;
+        }
+        
+        post_idx = postorder.size()-1;
+        return recursive(postorder, 0, inorder.size()-1);
+    }
+    
+    TreeNode* recursive(vector<int>& postorder, int left_idx, int right_idx){
+        if(left_idx > right_idx)
+            return nullptr;
+        
+        int root_val = postorder[post_idx];
+        TreeNode* root = new TreeNode(root_val);
+        
+        int index = inorder_map[root_val];
+        post_idx--;
+        
+        root->right = recursive(postorder, index + 1, right_idx);
+        root->left = recursive(postorder, left_idx, index - 1);
+
+        
+        return root;
+    }
+};
+
