@@ -27,7 +27,7 @@ public:
                     if(i <= 0)
                         continue;
                     if(stoneSet.count(loc+i))
-                        S.push({loc+i, i});        
+                        S.push({loc+i, i});
                 }
             }
         }
