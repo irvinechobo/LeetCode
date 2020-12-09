@@ -1,0 +1,59 @@
+1152. Analyze User Website Visit Pattern  <Medium>
+
+
+class Solution {
+public:
+    vector<string> mostVisitedPattern(vector<string>& username, vector<int>& timestamp, vector<string>& website) {
+        int N = username.size();
+
+        
+        /* create user map */
+        unordered_map<string,vector<pair<int,string>>> usermap;
+        for(int i = 0; i < N; i++){
+            usermap[username[i]].push_back({timestamp[i], website[i]});
+        }
+        
+        /* re-create 3 website map from user map */
+        unordered_map<string, int> countmap;
+        for(auto& user : usermap){
+            /* sort timestamp[i] */
+            sort(user.second.begin(), user.second.end());
+            
+            /* new string style - "website[i] website[j] website[k]" 
+               duplicate is not allowed.
+            */
+            int size = user.second.size();
+            unordered_set<string> S;
+            for(int i = 0; i < size-2; i++)
+                for(int j = i+1; j < size-1; j++)
+                    for(int k = j+1; k < size; k++){
+                        S.insert({user.second[i].second + " " + user.second[j].second + " " + user.second[k].second});
+                    }
+            
+            /* check the count */
+            for(auto& lt : S)
+                countmap[lt]++;                        
+        }
+                                 
+        /* find max case */
+        int maxcount = 0;
+        string maxseq = "";
+        for(auto& [seq,cnt] : countmap){
+            if(maxcount < cnt)
+            {
+                maxcount = cnt;
+                maxseq = seq;
+            }
+            /* If there is more than one solution, return the lexicographically smallest such 3-sequence. */
+            else if(maxcount == cnt)
+                maxseq = min(maxseq, seq);
+        }
+        
+        /* extract result */
+        vector<string> res;
+        int p1 = maxseq.find(' ');
+        int p2 = maxseq.find_last_of(' ');
+        
+        return {maxseq.substr(0,p1), maxseq.substr(p1+1,p2-p1-1), maxseq.substr(p2+1)};
+    }
+};
