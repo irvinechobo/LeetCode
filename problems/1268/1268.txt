@@ -1,0 +1,36 @@
+1268. Search Suggestions System  <Medium>
+
+
+class Solution {
+public:
+    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
+        int N = products.size();
+        int M = searchWord.size();
+        sort(products.begin(),products.end());
+        
+        vector<int> matchSize(N);
+        for(int i = 0; i < N; i++){
+            string word = products[i];
+            int count = 0;
+            for(int j = 0; j < word.size(); j++)
+                if(word[j] == searchWord[j])
+                    count++;
+                else
+                    break;
+            matchSize[i] = count;
+        }
+        
+        vector<vector<string>> res(M);
+        for(int i = 0; i < N; i++){
+            if(matchSize[i] == 0)
+                continue;
+            
+            for(int j = 0; j < matchSize[i]; j++){
+                if(res[j].size() < 3)
+                    res[j].push_back(products[i]);
+            }
+        }
+                
+        return res;
+    }
+};
