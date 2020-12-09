@@ -1,0 +1,50 @@
+146. LRU Cache   <Medium>
+
+
+class LRUCache {
+    unordered_map<int, pair</*vector<int>*/list<int>::iterator, int>> dictionary;
+    list<int> cache;
+    //vector<int> cache;
+    int capacity;
+public:
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+    }
+    
+    int get(int key) {
+        if (dictionary.find(key) == dictionary.end())
+            return -1;
+        // To push the retrieved element to first. 
+        // (we used it recently, so this goes to more priority one)
+        //for (auto n : cache) {
+        //    std::cout << n << endl;
+        //}
+        cache.erase(dictionary[key].first);
+        cache.push_front(key);
+        //cache.insert(cache.begin(), key);
+        dictionary[key].first = cache.begin();
+        return dictionary[key].second;
+    }
+    
+    void put(int key, int value) {
+        // not found in the cache
+        if (dictionary.find(key) == dictionary.end()){
+            // cache capacity is full, so least used element should be removed
+            if (cache.size() == capacity){
+                int last_key = cache.back();
+                // remove last element from cache
+                cache.pop_back();
+                // removing the last element from dictionary
+                dictionary.erase(last_key);
+            }
+           
+        }
+        else{
+            cache.erase(dictionary[key].first); // using the pointer to the element, it gets removed in O(1)
+        }
+        
+        cache.push_front(key);
+        //cache.insert(cache.begin(),key);
+        dictionary[key] = {cache.begin(), value};
+    }
+};
