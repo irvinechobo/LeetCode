@@ -2,7 +2,7 @@
 In-order traversal means to "visit" (often, print) the left branch, then the current node, and finally, the right branch.
 
     void inOrderTraversal(TreeNode * node) {
-        if (node != nullptr) {
+        if(node != nullptr) {
             inOrderTraversal(node->left);
             visit(node);
             inOrderTraversal(node->right);
@@ -16,7 +16,7 @@ When performed on a binary search tree, it visits the nodes in ascending order (
 Pre-order traversal visits the current node before its child nodes (hence the name "pre-order").
 
     void preOrderTraversal(TreeNode * node) {
-        if (node != nullptr) {
+        if(node != nullptr) {
             visit (node) ;
             preOrderTraversal(node->left);
             preOrderTraversal(node->right);
@@ -31,7 +31,7 @@ In a pre-order traversal, the root is always the first node visited.
 Post-order traversal visits the current node after its child nodes (hence the name "post-order").
 
     void postOrderTraversal(TreeNode * node) {
-        if (node != nullptr) {
+        if(node != nullptr) {
             postOrderTraversal(node->left);
             postOrderTraversal(node->right);
             visit(node);
