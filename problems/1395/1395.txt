@@ -1,0 +1,35 @@
+1395. Count Number of Teams  <Medium>
+
+
+class Solution {
+public:
+    int numTeams(vector<int>& rating) {
+        int N = rating.size();
+        
+        int count = 0;
+        for(int j = 1; j < N-1; j++){
+            
+            int ll = 0, lh = 0;
+            for(int i = 0; i < j; i++){
+                if(rating[i] < rating[j])
+                    ll++;
+                else if(rating[i] > rating[j])
+                    lh++;
+            }
+            
+            int hl = 0, hh = 0;
+            for(int k = j+1; k < N; k++){
+                if(rating[j] < rating[k])
+                    hl++;
+                else if(rating[j] > rating[k])
+                    hh++;
+            }
+            
+            count += (ll * hl) + (lh * hh);
+            
+        }
+        
+        return count;
+        
+    }
+};
