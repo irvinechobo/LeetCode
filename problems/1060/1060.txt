@@ -1,0 +1,19 @@
+1060. Missing Element in Sorted Array   <Medium>
+
+
+class Solution {
+public:
+    int missingElement(vector<int>& nums, int k) {
+        int N = nums.size();
+        
+        for(int i = 0; i < N-1; i++){
+            int steps = nums[i+1] - nums[i] - 1;
+            if(steps < k)
+                k -= steps;
+            else
+                return nums[i] + k;
+        }
+        
+        return nums[N-1] + k;
+    }
+};
